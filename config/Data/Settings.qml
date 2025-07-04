@@ -26,7 +26,7 @@ Singleton {
                     settings.isDarkTheme = content.isDarkTheme ?? true
                     settings.currentTheme = content.currentTheme ?? (content.isDarkTheme !== false ? "oxocarbon_dark" : "oxocarbon_light")
                     settings.useCustomAccent = content.useCustomAccent ?? false
-                    settings.avatarSource = content.avatarSource ?? "https://cdn.discordapp.com/avatars/158005126638993408/de403b05fd7f74bb17e01a9b066a30fa?size=64"
+                    settings.avatarSource = content.avatarSource ?? "/home/antonio/.face"
                     settings.weatherLocation = content.weatherLocation ?? "Dinslaken"
                     settings.useFahrenheit = content.useFahrenheit ?? false
                     settings.displayTime = content.displayTime ?? 6000
@@ -58,7 +58,7 @@ Singleton {
     }
 
     // User-configurable settings
-    property string avatarSource: "https://cdn.discordapp.com/avatars/158005126638993408/de403b05fd7f74bb17e01a9b066a30fa?size=64"
+    property string avatarSource: "/home/antonio/.face"
     property bool isDarkTheme: true  // Keep for backwards compatibility
     property string currentTheme: "oxocarbon_dark"  // New theme system
     property bool useCustomAccent: false  // Whether to use custom accent colors
@@ -67,8 +67,8 @@ Singleton {
     property int displayTime: 6000  // Notification display time in ms
     property var ignoredApps: []  // Apps to ignore notifications from (case-insensitive)
     property int historyLimit: 25  // Notification history limit
-    property string videoPath: "~/Videos/"
-    property string wallpaperDirectory: "/home/lysec/nixos/assets/wallpapers/"
+    property string videoPath: "/home/antonio/Videos/"
+    property string wallpaperDirectory: "/home/antonio/Pictures/wallpapers/"
     property string lastWallpaperPath: ""
     property string customDarkAccent: "#be95ff"
     property string customLightAccent: "#8a3ffc"
