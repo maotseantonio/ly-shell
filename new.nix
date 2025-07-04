@@ -1,6 +1,5 @@
-
 {
-  description = "QuickShell QS-Bar flake with home config and activation";
+  description = "QuickShell QS-Bar flake with home config, activation, and extra runtime deps";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -28,6 +27,28 @@
         '';
       };
 
+      extraDeps = with pkgs; [
+        libsForQt5.qtstyleplugin-kvantum
+        kdePackages.qtstyleplugin-kvantum
+        wlsunset
+        libsForQt5.qt5.qtgraphicaleffects
+        kdePackages.qt5compat
+        kdePackages.qtbase
+        kdePackages.qtdeclarative
+        kdePackages.qtmultimedia
+        libqalculate
+        colloid-kde
+        kdePackages.qqc2-desktop-style
+        kdePackages.sonnet
+        kdePackages.kirigami
+        kdePackages.kirigami-addons
+        kdePackages.breeze
+      ];
+
+      qt6Qml = pkgs.lib.concatMapStringsSep ":" (pkg: "${pkg}/lib/qt-6/qml") extraDeps;
+      qt5Qml = "${pkgs.libsForQt5.qtstyleplugin-kvantum}/lib/qt-5/qml";
+      qmlPath = "${qt6Qml}:${qt5Qml}";
+
       qsBar = pkgs.stdenvNoCC.mkDerivation {
         pname = "qs-bar";
         version = "1.0";
@@ -38,6 +59,8 @@
           mkdir -p $out/bin
 
           makeWrapper ${quickshellBin}/bin/qs $out/bin/qs-bar \
+            --set QML2_IMPORT_PATH "${qmlPath}" \
+            --prefix PATH : ${pkgs.lib.makeBinPath extraDeps} \
             --add-flags "-p $HOME/.config/quickshell/shell.qml"
         '';
       };
