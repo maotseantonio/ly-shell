@@ -63,11 +63,10 @@
 
             installPhase = ''
               mkdir -p $out/bin
-
-              makeWrapper ${quickshellBin}/bin/qs $out/bin/qs-bar \
-                --set QML2_IMPORT_PATH "${qmlPath}" \
-                --prefix PATH : ${pkgs.lib.makeBinPath extraDeps} \
-                --add-flags "-p $HOME/.config/quickshell/shell.qml"
+makeWrapper ${quickshellBin}/bin/qs $out/bin/qs-bar \
+  --set QML2_IMPORT_PATH "${qmlPath}" \
+  --prefix PATH : ${pkgs.lib.makeBinPath extraDeps} \
+  --add-flags "-p \$HOME/.config/quickshell/shell.qml"
             '';
           };
         in
