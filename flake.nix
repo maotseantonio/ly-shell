@@ -28,19 +28,25 @@
         '';
       };
 
+
       qsBar = pkgs.stdenvNoCC.mkDerivation {
-        pname = "qs-bar";
-        version = "1.0";
+  pname = "qs-bar";
+  version = "1.0";
 
-        nativeBuildInputs = [ pkgs.makeWrapper ];
+  nativeBuildInputs = [ pkgs.makeWrapper ];
 
-        installPhase = ''
-          mkdir -p $out/bin
+  unpackPhase = "true";  # no source to unpack
 
-          makeWrapper ${quickshellBin}/bin/qs $out/bin/qs-bar \
-            --add-flags "-p $HOME/.config/quickshell/shell.qml"
-        '';
-      };
+  installPhase = ''
+    mkdir -p $out/bin
+
+    makeWrapper ${quickshellBin}/bin/quickshell $out/bin/qs-bar \
+      --set QML2_IMPORT_PATH "${qmlPath}" \
+      --prefix PATH : ${pkgs.lib.makeBinPath extraDeps} \
+      --add-flags "-p $HOME/.config/quickshell/shell.qml"
+  '';
+};
+
 
     in {
       quickshellConfig = quickshellConfig;
